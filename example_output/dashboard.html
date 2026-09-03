@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="light dark">
+<title>Data Quality Passport &mdash; dirty_cafe_sales.csv</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    color-scheme: light dark;
+    --paper: #FFFFFF;
+    --paper-soft: #FAFAF9;
+    --ink: #1B1D1C;
+    --ink-soft: #6B7470;
+    --line: #E7E5DF;
+    --accent: #2B8A86;
+    --accent-soft: #EAF5F4;
+    --warn: #C1862E;
+    --critical: #C15347;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #17191A;
+      --paper-soft: #1F2222;
+      --ink: #EDEDEA;
+      --ink-soft: #98A19D;
+      --line: #303433;
+      --accent: #4FBAB5;
+      --accent-soft: #1D2C2B;
+      --warn: #D99A45;
+      --critical: #D97567;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { background: var(--paper); }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; line-height: 1.55; }
+  .page { max-width: 760px; margin: 0 auto; padding: 64px 24px 96px; }
+  header { border-bottom: 1px solid var(--line); padding-bottom: 28px; margin-bottom: 40px; }
+  .kicker { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--accent); }
+  h1 { font-size: 30px; font-weight: 600; margin: 10px 0 16px; letter-spacing: -0.01em; word-break: break-word; }
+  .meta-row { display: flex; gap: 32px; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--ink-soft); }
+  .meta-row div span { display: block; color: var(--ink); font-size: 20px; font-weight: 600; margin-top: 2px; }
+  section { margin-bottom: 44px; }
+  h2 { font-size: 15px; font-weight: 600; margin: 0 0 4px; }
+  .section-sub { font-size: 14px; color: var(--ink-soft); margin: 0 0 20px; max-width: 60ch; }
+  .checks { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .check { background: var(--paper-soft); padding: 18px 20px; }
+  .check .label { font-size: 13px; color: var(--ink-soft); }
+  .check .value { font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600; margin-top: 4px; }
+  .value.pass { color: var(--accent); }
+  .col-row { display: grid; grid-template-columns: 150px 1fr 60px; align-items: center; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .col-row:last-child { border-bottom: none; }
+  .col-name { font-size: 14px; font-weight: 500; }
+  .col-detail { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-soft); margin-top: 2px; }
+  .bar-track { height: 8px; background: var(--line); border-radius: 2px; overflow: hidden; }
+  .bar-fill { height: 100%; }
+  .bar-fill.low { background: var(--accent); }
+  .bar-fill.mid { background: var(--warn); }
+  .bar-fill.high { background: var(--critical); }
+  .col-pct { font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600; text-align: right; }
+  .pct.low { color: var(--accent); }
+  .pct.mid { color: var(--warn); }
+  .pct.high { color: var(--critical); }
+  .summary-box { background: var(--accent-soft); border-left: 3px solid var(--accent); padding: 24px 28px; }
+  .summary-box h3 { font-size: 13px; font-family: 'IBM Plex Mono', monospace; color: var(--accent); margin: 0 0 12px; font-weight: 600; }
+  .summary-box p { font-size: 14px; margin: 0 0 14px; }
+  .summary-box p:last-child { margin-bottom: 0; }
+  footer { border-top: 1px solid var(--line); padding-top: 20px; margin-top: 56px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink-soft); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+  @media (max-width: 560px) {
+    .checks { grid-template-columns: 1fr; }
+    .col-row { grid-template-columns: 100px 1fr 50px; gap: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="kicker">DATA QUALITY PASSPORT</div>
+    <h1>dirty_cafe_sales.csv</h1>
+    <div class="meta-row">
+      <div>Rows<span>10,000</span></div>
+      <div>Columns<span>8</span></div>
+      <div>Overall status<span style="color:var(--critical);">2 columns critical</span></div>
+    </div>
+  </header>
+
+  <section>
+    <h2>Structural checks</h2>
+    <p class="section-sub">Checks that look at the dataset as a whole, before looking column by column.</p>
+    <div class="checks">
+      <div class="check"><div class="label">Duplicate rows</div><div class="value pass">0</div></div>
+      <div class="check"><div class="label">Duplicate IDs</div><div class="value pass">0</div></div>
+      <div class="check"><div class="label">Cross-column mismatches</div><div class="value pass">0 across 1 formula</div></div>
+      <div class="check"><div class="label">Columns above 30% missing</div><div class="value" style="color:var(--critical);">2</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Missing data by column</h2>
+    <p class="section-sub">Includes real blanks plus placeholder values such as "UNKNOWN" or "ERROR" &mdash; both count as missing.</p>
+    
+    <div class="col-row">
+      <div>
+        <div class="col-name">Location</div>
+        <div class="col-detail">3,265 blank &middot; 696 placeholder</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill high" style="width:39.6%"></div></div>
+      <div class="col-pct pct high">39.6%</div>
+    </div>
+    <div class="col-row">
+      <div>
+        <div class="col-name">Payment Method</div>
+        <div class="col-detail">2,579 blank &middot; 599 placeholder</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill high" style="width:31.8%"></div></div>
+      <div class="col-pct pct high">31.8%</div>
+    </div>
+    <div class="col-row">
+      <div>
+        <div class="col-name">Item</div>
+        <div class="col-detail">333 blank &middot; 636 placeholder</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill low" style="width:9.7%"></div></div>
+      <div class="col-pct pct low">9.7%</div>
+    </div>
+    <div class="col-row">
+      <div>
+        <div class="col-name">Price Per Unit</div>
+        <div class="col-detail">179 blank &middot; 354 placeholder</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill low" style="width:5.3%"></div></div>
+      <div class="col-pct pct low">5.3%</div>
+    </div>
+    <div class="col-row">
+      <div>
+        <div class="col-name">Total Spent</div>
+        <div class="col-detail">173 blank &middot; 329 placeholder</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill low" style="width:5.0%"></div></div>
+      <div class="col-pct pct low">5.0%</div>
+    </div>
+    <div class="col-row">
+      <div>
+        <div class="col-name">Quantity</div>
+        <div class="col-detail">138 blank &middot; 341 placeholder</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill low" style="width:4.8%"></div></div>
+      <div class="col-pct pct low">4.8%</div>
+    </div>
+    <div class="col-row">
+      <div>
+        <div class="col-name">Transaction Date</div>
+        <div class="col-detail">159 blank &middot; 301 placeholder</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill low" style="width:4.6%"></div></div>
+      <div class="col-pct pct low">4.6%</div>
+    </div>
+    <div class="col-row">
+      <div>
+        <div class="col-name">Transaction ID</div>
+        <div class="col-detail">0 blank &middot; 0 placeholder</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill low" style="width:0.0%"></div></div>
+      <div class="col-pct pct low">0.0%</div>
+    </div>
+  </section>
+  
+  <section>
+    <h2>Cross-column checks</h2>
+    <p class="section-sub">Rows where a formula between columns does not add up.</p>
+    
+    <div class="col-row">
+      <div>
+        <div class="col-name">Quantity x Price Per Unit = Total Spent</div>
+        <div class="col-detail">8,544 rows checked</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill low" style="width:0.0%"></div></div>
+      <div class="col-pct pct low">0</div>
+    </div>
+  </section>
+  <section>
+    <h2>Outliers (IQR method)</h2>
+    <p class="section-sub">Values that fall well outside the normal range for that column, based on the interquartile range.</p>
+    
+    <div class="col-row">
+      <div>
+        <div class="col-name">Quantity</div>
+        <div class="col-detail">valid range: -1.0 to 7.0</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill low" style="width:0.0%"></div></div>
+      <div class="col-pct pct low">0</div>
+    </div>
+    <div class="col-row">
+      <div>
+        <div class="col-name">Price Per Unit</div>
+        <div class="col-detail">valid range: -1.0 to 7.0</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill low" style="width:0.0%"></div></div>
+      <div class="col-pct pct low">0</div>
+    </div>
+    <div class="col-row">
+      <div>
+        <div class="col-name">Total Spent</div>
+        <div class="col-detail">valid range: -8.0 to 24.0</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill high" style="width:13.634449357759529%"></div></div>
+      <div class="col-pct pct high">259</div>
+    </div>
+  </section>
+  <section>
+    <h2>Text consistency</h2>
+    <p class="section-sub">Looks for the same value written with different casing, such as "cash" and "Cash".</p>
+    
+    <div class="col-row">
+      <div>
+        <div class="col-name">Item</div>
+        <div class="col-detail">examples: none found</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill low" style="width:0%"></div></div>
+      <div class="col-pct pct low">0</div>
+    </div>
+    <div class="col-row">
+      <div>
+        <div class="col-name">Payment Method</div>
+        <div class="col-detail">examples: none found</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill low" style="width:0%"></div></div>
+      <div class="col-pct pct low">0</div>
+    </div>
+    <div class="col-row">
+      <div>
+        <div class="col-name">Location</div>
+        <div class="col-detail">examples: none found</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill low" style="width:0%"></div></div>
+      <div class="col-pct pct low">0</div>
+    </div>
+  </section>
+  <section>
+    <h2>Date format</h2>
+    <p class="section-sub">Values that could not be read as a valid date, and columns where more than one date format is mixed together.</p>
+    
+    <div class="col-row">
+      <div>
+        <div class="col-name">Transaction Date</div>
+        <div class="col-detail">9,540 values checked</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill low" style="width:0.0%"></div></div>
+      <div class="col-pct pct low">0</div>
+    </div>
+  </section>
+  <section>
+    <div class="summary-box">
+      <h3>AI SUMMARY &mdash; GENERATED FROM THE CHECKS ABOVE</h3>
+      <p>Overview
+The dataset contains 10000 rows and 8 columns.
+Duplicate rows found: 0.
+Cross-column mismatches found: 0.</p>
+<p>Top issues
+- Location: 39.6% missing or placeholder values.
+- Payment Method: 31.8% missing or placeholder values.
+- Item: 9.7% missing or placeholder values.
+- Outliers:
+- Total Spent: 259 outliers found.</p>
+<p>Recommendation
+Start by reviewing Location, as it has the highest share of missing data.</p>
+
+    </div>
+  </section>
+
+  <footer>
+    <span>Data Quality Passport</span>
+    <span>Powered by data_quality_toolkit</span>
+  </footer>
+</div>
+</body>
+</html>

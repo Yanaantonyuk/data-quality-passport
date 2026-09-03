@@ -1,0 +1,114 @@
+{
+  "source_file": "dirty_cafe_sales.csv",
+  "dataset_shape": [
+    10000,
+    8
+  ],
+  "columns": {
+    "Transaction ID": {
+      "real_missing": 0,
+      "disguised_missing": 0,
+      "total_missing": 0,
+      "missing_percent": 0.0
+    },
+    "Item": {
+      "real_missing": 333,
+      "disguised_missing": 636,
+      "total_missing": 969,
+      "missing_percent": 9.7
+    },
+    "Quantity": {
+      "real_missing": 138,
+      "disguised_missing": 341,
+      "total_missing": 479,
+      "missing_percent": 4.8
+    },
+    "Price Per Unit": {
+      "real_missing": 179,
+      "disguised_missing": 354,
+      "total_missing": 533,
+      "missing_percent": 5.3
+    },
+    "Total Spent": {
+      "real_missing": 173,
+      "disguised_missing": 329,
+      "total_missing": 502,
+      "missing_percent": 5.0
+    },
+    "Payment Method": {
+      "real_missing": 2579,
+      "disguised_missing": 599,
+      "total_missing": 3178,
+      "missing_percent": 31.8
+    },
+    "Location": {
+      "real_missing": 3265,
+      "disguised_missing": 696,
+      "total_missing": 3961,
+      "missing_percent": 39.6
+    },
+    "Transaction Date": {
+      "real_missing": 159,
+      "disguised_missing": 301,
+      "total_missing": 460,
+      "missing_percent": 4.6
+    }
+  },
+  "duplicate_rows": 0,
+  "duplicate_ids": 0,
+  "cross_column_checks": [
+    {
+      "formula": "Quantity x Price Per Unit = Total Spent",
+      "rows_checked": 8544,
+      "mismatches_found": 0
+    }
+  ],
+  "outliers": {
+    "Quantity": {
+      "lower_bound": -1.0,
+      "upper_bound": 7.0,
+      "outlier_count": 0,
+      "rows_checked": 9521
+    },
+    "Price Per Unit": {
+      "lower_bound": -1.0,
+      "upper_bound": 7.0,
+      "outlier_count": 0,
+      "rows_checked": 9467
+    },
+    "Total Spent": {
+      "lower_bound": -8.0,
+      "upper_bound": 24.0,
+      "outlier_count": 259,
+      "rows_checked": 9498
+    }
+  },
+  "text_consistency": {
+    "Item": {
+      "inconsistent_value_groups": 0,
+      "examples": []
+    },
+    "Payment Method": {
+      "inconsistent_value_groups": 0,
+      "examples": []
+    },
+    "Location": {
+      "inconsistent_value_groups": 0,
+      "examples": []
+    }
+  },
+  "date_checks": {
+    "Transaction Date": {
+      "values_checked": 9540,
+      "failed_to_parse": 0,
+      "different_formats_found": 1,
+      "example_formats": [
+        "####-##-##"
+      ]
+    }
+  },
+  "_thresholds": {
+    "low": 10.0,
+    "mid": 30.0
+  }
+}
