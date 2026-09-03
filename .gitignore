@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.env
+
+# generated files from running the tools locally,
+# the example versions in example_output/ are committed on purpose
+/quality_report.json
+/data_quality_passport.html
+/cleaned_data.csv
+/cleaning_log.json

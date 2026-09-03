@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "data-quality-toolkit"
+version = "0.1.0"
+description = "Functions for checking and cleaning messy CSV or Excel data, importable into your own notebook."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+dependencies = [
+    "pandas",
+    "openpyxl",
+]
+
+[project.optional-dependencies]
+ai = ["anthropic"]
+
+[project.urls]
+Homepage = "https://github.com/Yanaantonyuk/data-quality-passport"
+
+[project.scripts]
+dqp-check = "data_quality_tool:main"
+dqp-clean = "data_cleaning_assistant:main"
+
+[tool.setuptools]
+packages = ["data_quality_toolkit"]
+py-modules = ["data_quality_tool", "data_cleaning_assistant"]
